@@ -186,4 +186,12 @@ def like(object_type, object_id, action):
 
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+        if not Category.query.first():
+            db.session.add(Category(name="Математика"))
+            db.session.add(Category(name="Информатика"))
+            db.session.add(Category(name="Физика"))
+            db.session.add(Category(name="Литература"))
+            db.session.commit()
     app.run(debug=True)
