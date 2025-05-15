@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Панель администратора</h2>
-<h3>Пользователи</h3>
-<ul>
-{% for u in users %}
-  <li>{{ u.username }} ({{ u.role }})
-      {% if u.role != 'admin' %}
-      <form style="display:inline;" action="{{ url_for('make_admin', user_id=u.id) }}" method="post">
-        <button class="btn" type="submit">Сделать админом</button>
-      </form>
-      {% endif %}
-  </li>
-{% endfor %}
-</ul>
+    <h2>Панель администратора</h2>
+    <h3>Пользователи</h3>
+    <ul>
+        {% for u in users %}
+            <li>{{ u.username }} ({{ u.role }})
+                {% if u.role != 'admin' %}
+                    <form style="display:inline;" action="{{ url_for('make_admin', user_id=u.id) }}" method="post">
+                        <button class="btn" type="submit">Сделать админом</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
