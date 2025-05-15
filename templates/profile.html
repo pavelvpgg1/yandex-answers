@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Профиль: {{ user.username }}</h2>
+    <p>Рейтинг: {{ user.rating }}</p>
+    <p>Роль: {{ user.role }}</p>
+    <h3>Мои вопросы</h3>
+    <ul>
+        {% for q in questions %}
+            <li><a href="{{ url_for('question', question_id=q.id) }}">{{ q.title }}</a></li>
+        {% else %}
+            <li>Нет вопросов.</li>
+        {% endfor %}
+    </ul>
+    <h3>Мои ответы</h3>
+    <ul>
+        {% for a in answers %}
+            <li>
+                <b>К вопросу:</b> <a
+                    href="{{ url_for('question', question_id=a.question_id) }}">{{ a.question.title }}</a>
+                <br>{{ a.body }}
+            </li>
+        {% else %}
+            <li>Нет ответов.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Задать вопрос</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.title.label }} {{ form.title(size=64) }}
+        {{ form.body.label }} {{ form.body(rows=6) }}
+        {{ form.category.label }} {{ form.category() }}
+        {{ form.submit() }}
+    </form>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>{{ question.title }}</h2>
+    <div>
+        <b>Категория:</b> {{ question.category.name if question.category else '' }}<br>
+        <b>Автор:</b> {{ question.user.username }}<br>
+        <p>{{ question.body }}</p>
+    </div>
+    <div>
+        <button class="btn" onclick="likeObject('question', {{ question.id }}, 'like')">👍</button>
+        <span id="question-likes">{{ question.rating or 0 }}</span>
+        <button class="btn" onclick="likeObject('question', {{ question.id }}, 'dislike')">👎</button>
+    </div>
+    <hr>
+    <h3>Ответы:</h3>
+    <ul>
+        {% for a in answers %}
+            <li>
+                <b>{{ a.user.username }}</b> (оценка: <span id="answer-{{ a.id }}-likes">{{ a.rating or 0 }}</span>)
+                <button class="btn" onclick="likeObject('answer', {{ a.id }}, 'like')">👍</button>
+                <button class="btn" onclick="likeObject('answer', {{ a.id }}, 'dislike')">👎</button>
+                <br>{{ a.body }}
+            </li>
+        {% else %}
+            <li>Ответов пока нет.</li>
+        {% endfor %}
+    </ul>
+    {% if current_user.is_authenticated %}
+        <h4>Добавить ответ</h4>
+        <form method="post">
+            {{ form.hidden_tag() }}
+            {{ form.body.label }} {{ form.body(rows=4) }}
+            {{ form.submit() }}
+        </form>
+    {% else %}
+        <p>Войдите, чтобы ответить.</p>
+    {% endif %}
+    <script>
+        function likeObject(type, id, action) {
+            fetch(`/like/${type}/${id}/${action}`, {method: 'POST'})
+                .then(r => r.json()).then(data => {
+                if (type === 'question') {
+                    document.getElementById('question-likes').innerText = data.likes - data.dislikes;
+                } else {
+                    document.getElementById(`answer-${id}-likes`).innerText = data.likes - data.dislikes;
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+

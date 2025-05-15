@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Категория: {{ category.name }}</h2>
+    <ul>
+        {% for q in questions %}
+            <li>
+                <a href="{{ url_for('question', question_id=q.id) }}">{{ q.title }}</a>
+                <small>Автор: {{ q.user.username }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
