@@ -16,8 +16,8 @@
 
 1. Установить зависимости:  
    `pip install -r requirements.txt`
-2. Создать БД MySQL и прописать строку подключения в app.py
-3. Инициализировать базу:
+2. Создать БД SQLite и прописать строку подключения в app.py
+4. Инициализировать базу:
    ```bash
    flask db init
    flask db migrate -m "Initial migration."
